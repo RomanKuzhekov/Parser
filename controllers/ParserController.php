@@ -9,7 +9,36 @@
 namespace controllers;
 
 
-class ParserController
+/**
+ * Class ParserController
+ * @package controllers
+ */
+final class ParserController extends Controller
 {
+    private $url;
+    protected $config;
+    private $count = 0;
 
+    /**
+     * ParserController constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->url = $this->config['url'];
+
+        if(empty($this->url)){
+            throw new \Exception("Адрес сайта пустой.");
+        }
+    }
+
+    public function parseCategories()
+    {
+
+    }
+
+    public function parseProducts($categories) : string
+    {
+
+    }
 }
