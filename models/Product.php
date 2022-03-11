@@ -9,6 +9,8 @@
 namespace models;
 
 
+use services\Db;
+
 final class Product extends Model
 {
     protected static $table = 'products';
@@ -24,6 +26,9 @@ final class Product extends Model
 
     public static function getProductsByCategory($categoryId)
     {
-
+        $query = Db::getInstance()->db()->prepare('SELECT * FROM ' . static::$table . ' WHERE category_id = :category_id');
+        $query->bindValue(":category_id", $categoryId);
+        $query->execute();
+        return $query->fetchAll(Db::FETCH_CLASS, self::class);
     }
 }

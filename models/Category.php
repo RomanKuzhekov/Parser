@@ -9,6 +9,8 @@
 namespace models;
 
 
+use services\Db;
+
 final class Category extends Model
 {
     protected static $table = 'categories';
@@ -22,11 +24,11 @@ final class Category extends Model
 
     public static function getRandomCategory()
     {
-
+        return Db::getInstance()->db()->query('SELECT * FROM ' . static::$table . ' ORDER BY RAND() LIMIT 1')->fetchObject();
     }
 
     public static function getAllCategory()
     {
-
+        return Db::getInstance()->db()->query('SELECT * FROM ' . static::$table . ' WHERE flag=1 ORDER BY title ')->fetchAll();
     }
 }
