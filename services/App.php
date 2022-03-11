@@ -1,7 +1,3 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Роман
- * Date: 11.03.2022
- * Time: 22:57
- */
+require_once $_SERVER['DOCUMENT_ROOT']."/services/Autoloader.php";
+spl_autoload_register([new \services\Autoloader(), "loadClass"]);
