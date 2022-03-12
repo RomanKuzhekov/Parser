@@ -14,7 +14,6 @@
     <div class="content">
         <div class="sidebar">
             <button onclick="javascript:window.location.reload()">Обновить страницу</button>
-            <p>Меню:</p>
             <p><a href="/">Главная страница</a></p>
             <ul>
                 <?php foreach ($categories as $item) { ?>
