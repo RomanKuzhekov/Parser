@@ -34,8 +34,9 @@ class Model
 
     public function prepareAttributes(array $data)
     {
+
         foreach ($data as $key => $val){
-            if(in_array($key, static::$fields)){
+            if (in_array($key, static::$fields)) {
                 $this->attributes[$key] = $val;
             }
         }
@@ -64,7 +65,6 @@ class Model
     protected function insert()
     {
         $columns = array_keys($this->attributes);
-
         if(!empty($this->attributes)){
             $query = Db::getInstance()->db()->prepare('INSERT INTO ' . static::$table . '(' . implode(', ', $columns) . ') VALUES (:' . implode(', :', $columns).')');
             $query = $this->bindParams($query);

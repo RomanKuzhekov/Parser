@@ -8,7 +8,11 @@
 
 namespace controllers;
 
-class Controller
+use interfaces\IParser;
+use models\Category;
+use models\Product;
+
+class Controller implements IParser
 {
     protected $config;
     private $action;
@@ -40,12 +44,22 @@ class Controller
         $this->prepareCategory();
         $this->prepareProduct();
 
-
+        echo $this->render("parser/index",
+            [
+                'category' => $this->category,
+                'message' => $this->message,
+                'products' => $this->products,
+            ]
+        );
     }
 
     public function actionProduct()
     {
-
+        $this->prepareCategory();
+        $this->products = Product::getProductsByCategory($this->params);
+        echo $this->render("parser/category",
+            ['products' => $this->products]
+        );
     }
 
     private function parseRequest()
@@ -61,22 +75,45 @@ class Controller
 
     public function render($template, $params)
     {
-
+        return $this->renderTemplate("layouts/main",
+            [
+                'content' => $this->renderTemplate($template, $params),
+                'categories' => $this->categories,
+            ]
+        );
     }
 
     public function renderTemplate($template, $params)
     {
-
+        extract($params);
+        ob_start();
+        $templatePath = $this->config['root_dir'] . "views/{$template}.php";
+        include $templatePath;
+        return ob_get_clean();
     }
 
     private function prepareCategory()
     {
+        //выбираем рандомную категорию из БД для парсинга
+        $this->category = Category::getRandomCategory();
 
+        //заносим все категории в БД 1 раз
+        if($this->category === false){
+            (new ParserController())->parseCategories();
+            $this->redirect('index.php');
+        }
+        $this->categories = Category::getAllCategory();
     }
 
     private function prepareProduct()
     {
+        $this->products = Product::getProductsByCategory($this->category->category_id);
 
+        //если нет товаров в бд - парсим товары по новой категории и заносим их в $products
+        if (!$this->products) {
+            $this->message = (new ParserController())->parseProducts($this->category);
+            $this->products = Product::getProductsByCategory($this->category->category_id);
+        }
     }
 
     public function redirect($url)
@@ -86,7 +123,11 @@ class Controller
 
     public function getPage(string $url)
     {
-
+        $content = file_get_contents($url);
+        $dom = new \DOMDocument();
+        $content = mb_convert_encoding($content, 'HTML-ENTITIES', 'utf-8');
+        @$dom->loadHTML($content);
+        return new \DOMXPath($dom);
     }
 
     public function prepareVar($var)
