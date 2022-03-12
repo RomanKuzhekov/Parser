@@ -22,7 +22,8 @@ final class Db extends \PDO
         $this->config = require "./config/config.php";
     }
 
-    public function db(){
+    public function db()
+    {
         if (is_null($this->conn)) {
             try {
                 $this->conn = new \PDO(

@@ -12,6 +12,7 @@ use interfaces\IParser;
 use models\Category;
 use models\Product;
 
+
 class Controller implements IParser
 {
     protected $config;
@@ -65,7 +66,7 @@ class Controller implements IParser
     private function parseRequest()
     {
         foreach ($this->patterns as $pattern) {
-            if(preg_match_all($pattern, $_SERVER['REQUEST_URI'], $matches)){
+            if (preg_match_all($pattern, $_SERVER['REQUEST_URI'], $matches)) {
                 $this->action = ucfirst($matches['action'][0]);
                 $this->params = $matches['params'][0];
                 return;
@@ -98,7 +99,7 @@ class Controller implements IParser
         $this->category = Category::getRandomCategory();
 
         //заносим все категории в БД 1 раз
-        if($this->category === false){
+        if ($this->category === false) {
             (new ParserController())->parseCategories();
             $this->redirect('index.php');
         }
@@ -132,7 +133,6 @@ class Controller implements IParser
 
     public function prepareVar($var)
     {
-        $var = trim(strip_tags($var));
-        return empty($var) ? 'Нет значения' : $var;
+        return empty(trim(strip_tags($var))) ? 'Нет значения' : $var;
     }
 }

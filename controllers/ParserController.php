@@ -49,6 +49,7 @@ final class ParserController extends Controller
             /** @var \DOMElement $link */
             //формируем ссылку для каждой категории
             foreach ($item->getElementsByTagName('a') as $link) {
+                $data = [];
                 $href = $link->getAttribute('href');
 
                 //подчищаем ссылки

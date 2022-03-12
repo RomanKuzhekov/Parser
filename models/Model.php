@@ -19,7 +19,6 @@ class Model
     protected $attributes = [];
     protected $isLoad = false;
 
-
     public function __construct()
     {
         if (empty(static::$table)) {
@@ -29,12 +28,10 @@ class Model
         if(empty(static::$fields)) {
             throw new \Exception('Не определили поля таблицы в:' . get_class($this));
         }
-
     }
 
     public function prepareAttributes(array $data)
     {
-
         foreach ($data as $key => $val){
             if (in_array($key, static::$fields)) {
                 $this->attributes[$key] = $val;
