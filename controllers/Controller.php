@@ -58,8 +58,12 @@ class Controller implements IParser
     {
         $this->prepareCategory();
         $this->products = Product::getProductsByCategory($this->params);
+        $category = Category::getCategory($this->params);
         echo $this->render("parser/category",
-            ['products' => $this->products]
+            [
+                'category' => $category->title,
+                'products' => $this->products
+            ]
         );
     }
 

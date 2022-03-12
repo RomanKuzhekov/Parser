@@ -1,4 +1,5 @@
-<?php foreach ($products as $item) { ?>
+<h2><?=$category?></h2>
+<? foreach ($products as $item) { ?>
     <div class="items">
         <p><a href="<?=$item->url?>" target="_blank"><?=$item->title?></a></p>
         <p><img src="<?=$item->img?>" width="200"></p>

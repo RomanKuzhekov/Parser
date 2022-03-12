@@ -31,4 +31,12 @@ final class Category extends Model
     {
         return Db::getInstance()->db()->query('SELECT * FROM ' . static::$table . ' WHERE flag=1 ORDER BY title ')->fetchAll();
     }
+
+    public static function getCategory($categoryId)
+    {
+        $query = Db::getInstance()->db()->prepare('SELECT * FROM ' . static::$table . ' WHERE category_id = :category_id');
+        $query->bindValue(":category_id", $categoryId);
+        $query->execute();
+        return $query->fetchObject();
+    }
 }
