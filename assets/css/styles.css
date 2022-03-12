@@ -1,0 +1,27 @@
+.container{
+    width: 1000px;
+    margin: 0 auto;
+    border:1px solid #ccc;
+    padding: 10px;
+}
+.sidebar{
+    display: inline-block;
+    width: 200px;
+    margin-right: 50px;
+}
+.parser{
+    display: inline-block;
+    width: 700px;
+    vertical-align: top;
+}
+.items{
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin: 5px;
+    width: 200px;
+    display: inline-block;
+    vertical-align: top;
+}
+.footer{
+    border-top: 1px dashed #ccc;
+}
