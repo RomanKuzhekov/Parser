@@ -137,6 +137,6 @@ class Controller implements IParser
 
     public function prepareVar($var)
     {
-        return empty(trim(strip_tags($var))) ? 'Нет значения' : $var;
+        return empty(trim(strip_tags($var))) ? 'Нет значения' : trim($var);
     }
 }
