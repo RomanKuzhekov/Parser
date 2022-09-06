@@ -37,7 +37,8 @@ final class ParserController extends Controller
 
     public function parseCategories()
     {
-        $xpath = $this->getPage($this->url);
+        $urlCategories = 'https://av.ru/catalog';
+        $xpath = $this->getPage($urlCategories);
 
         // выбираем блоки с категориями <div class="b-header-menu__wrap">...</ul>
         $nav = $xpath->query("//div[contains(@class, 'b-header-menu__wrap')]");
@@ -45,7 +46,6 @@ final class ParserController extends Controller
         /** @var \DOMElement $item */
         //заходим внутрь каждого блока с категориями
         foreach ($nav as $item) {
-
             /** @var \DOMElement $link */
             //формируем ссылку для каждой категории
             foreach ($item->getElementsByTagName('a') as $link) {
